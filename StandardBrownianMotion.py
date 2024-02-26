@@ -2,11 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class StandardBrownianMotion:
-    def __init__(self, num_trayectories, num_steps):
+    def __init__(self, num_trayectories, num_steps, max_time = 1):
         self.num_trayectories = num_trayectories
         self.num_steps = num_steps
-        self.dt = 1/num_steps
-        self.t = np.linspace(0, 1, num_steps)
+        self.dt = max_time/num_steps
+        self.t = np.linspace(0, max_time, num_steps)
 
     def generate_brownian_motion(self):
         brownian_motions = np.zeros((self.num_trayectories, self.num_steps))
@@ -29,6 +29,6 @@ num_trayectories = 1000
 num_steps = 365  # Number of time steps
 
 # Generate Brownian motion
-brownian_motion = StandardBrownianMotion(num_trayectories, num_steps)
+brownian_motion = StandardBrownianMotion(num_trayectories, num_steps, max_time = 1/4)
 brownian_motion.generate_brownian_motion()
 brownian_motion.plot()
