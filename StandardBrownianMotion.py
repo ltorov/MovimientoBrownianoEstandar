@@ -24,11 +24,11 @@ class StandardBrownianMotion:
         plt.xlabel('Tiempo')
         plt.show()
 
-# Parameters
-num_trayectories = 1000
-num_steps = 365  # Number of time steps
+# # Parameters
+# num_trayectories = 1000
+# num_steps = 365  # Number of time steps
 
-# Generate Brownian motion
-brownian_motion = StandardBrownianMotion(num_trayectories, num_steps, max_time = 1/4)
-brownian_motion.generate_brownian_motion()
-brownian_motion.plot()
+# # Generate Brownian motion
+# brownian_motion = StandardBrownianMotion(num_trayectories, num_steps, max_time = 1/4)
+# brownian_motion.generate_brownian_motion()
+# brownian_motion.plot()
