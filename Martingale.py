@@ -1,6 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 
+
 class MartingaleSimulation:
     def __init__(self, initial_balance, initial_bet_amount, max_rounds):
         self.initial_balance = initial_balance
@@ -28,6 +29,7 @@ class MartingaleSimulation:
     def simulate(self):
         while self.balance > 0 and self.rounds_played < self.max_rounds:
             self.play_round()
+
 
 # Example Usage:
 initial_balance = 500000
