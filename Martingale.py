@@ -7,6 +7,7 @@ class MartingaleSimulation:
         self.initial_balance = initial_balance
         self.balance = initial_balance
         self.bet_amount = initial_bet_amount
+        self.initial_bet_amount = initial_bet_amount
         self.max_rounds = max_rounds
         self.rounds_played = 0
         self.history = []
@@ -19,7 +20,7 @@ class MartingaleSimulation:
         outcome = self.flip_coin()
         if outcome == 1:
             self.balance += self.bet_amount
-            self.bet_amount = initial_bet_amount  # Reset bet amount after winning
+            self.bet_amount = self.initial_bet_amount  # Reset bet amount after winning
         else:
             self.balance -= self.bet_amount
             self.bet_amount *= 2
@@ -33,28 +34,27 @@ class MartingaleSimulation:
             if self.balance - self.bet_amount > 0:
                 self.play_round()
             else:
-                self.bet_amount = initial_bet_amount
+                self.bet_amount = self.initial_bet_amount
                 self.play_round()
 
+# # Example Usage:
+# initial_balance = 500
+# initial_bet_amount = 10
+# max_rounds = 50
 
-# Example Usage:
-initial_balance = 500000
-initial_bet_amount = 10000
-max_rounds = 50
+# martingale_simulation = MartingaleSimulation(initial_balance, initial_bet_amount, max_rounds)
+# martingale_simulation.simulate()
 
-martingale_simulation = MartingaleSimulation(initial_balance, initial_bet_amount, max_rounds)
-martingale_simulation.simulate()
+# # Plotting the results
+# plt.plot(range(1, martingale_simulation.rounds_played + 1), martingale_simulation.history)
+# plt.xlabel('Rounds')
+# plt.ylabel('Balance')
+# plt.title('Martingale Simulation')
+# plt.show()
 
-# Plotting the results
-plt.plot(range(1, martingale_simulation.rounds_played + 1), martingale_simulation.history)
-plt.xlabel('Rounds')
-plt.ylabel('Balance')
-plt.title('Martingale Simulation')
-plt.show()
-
-# Plotting the results
-plt.plot(range(1, martingale_simulation.rounds_played + 1), martingale_simulation.bet_history)
-plt.xlabel('Rounds')
-plt.ylabel('Bets')
-plt.title('Martingale Simulation')
-plt.show()
+# # Plotting the results
+# plt.plot(range(1, martingale_simulation.rounds_played + 1), martingale_simulation.bet_history)
+# plt.xlabel('Rounds')
+# plt.ylabel('Bets')
+# plt.title('Martingale Simulation')
+# plt.show()
