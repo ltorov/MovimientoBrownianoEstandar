@@ -17,13 +17,13 @@ def simulations(initial_balance, initial_bet_amount, N = 500, max_rounds = None,
     print(stats.describe(earnings))
     print(np.median(earnings))
     # Plotting the results
-    plt.hist(earnings, bins=10, color='blue', edgecolor='black')
+    plt.hist(earnings, bins = 10, color='blue', edgecolor = 'black')
     plt.xlabel('Earnings')
     plt.title('Martingale Simulation')
     plt.show()
 
     # Plotting the results
-    plt.hist(rounds_played, bins=10, color='blue', edgecolor='black')
+    plt.hist(rounds_played, bins = 10, color='blue', edgecolor = 'black')
     plt.xlabel('Rounds Played')
     plt.title('Martingale Simulation')
     plt.show()
@@ -35,15 +35,14 @@ def simulations(initial_balance, initial_bet_amount, N = 500, max_rounds = None,
 
 # simulations(initial_balance, initial_bet_amount, max_rounds = max_rounds)
 
-# B
-initial_balance = 500
+# # B
+# initial_balance = 500
+# initial_bet_amount = 10
+
+# simulations(initial_balance, initial_bet_amount)
+
+# C
+initial_balance = 500000
 initial_bet_amount = 10
 
 simulations(initial_balance, initial_bet_amount)
-
-# # C
-# initial_balance = 500000
-# initial_bet_amount = 10
-# max_bet_amount = 500000
-
-# simulations(initial_balance, initial_bet_amount)
