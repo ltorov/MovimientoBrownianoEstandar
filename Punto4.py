@@ -39,13 +39,13 @@ def simulations(initial_balance, initial_bet_amount, N = 500, max_rounds = None,
 # max_rounds = 50
 # simulations(initial_balance, initial_bet_amount, max_rounds = max_rounds)
 
-# B
-initial_balance = 500
-initial_bet_amount = 10
-simulations(initial_balance, initial_bet_amount)
-
-# # C
-# initial_balance = 500000
+# # B
+# initial_balance = 500
 # initial_bet_amount = 10
-# max_bet_amount = 500000
-# simulations(initial_balance, initial_bet_amount, max_bet_amount = max_bet_amount)
+# simulations(initial_balance, initial_bet_amount)
+
+# C
+initial_balance = 500000
+initial_bet_amount = 10
+max_bet_amount = 500000
+simulations(initial_balance, initial_bet_amount, max_bet_amount = max_bet_amount)
