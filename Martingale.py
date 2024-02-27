@@ -33,7 +33,7 @@ class MartingaleSimulation:
         while self.balance > 0:
             if self.max_rounds != None and self.rounds_played >= self.max_rounds:
                 break
-            if self.max_bet_amount != None and self.max_bet_amount <= self.bet_amount:
+            if self.max_bet_amount != None and self.bet_amount >= self.max_bet_amount:
                 break
 
             self.bet_history.append(self.bet_amount)
