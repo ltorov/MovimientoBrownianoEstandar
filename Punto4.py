@@ -16,7 +16,7 @@ def simulations(initial_balance, initial_bet_amount, N = 500, max_rounds = None,
 
     print(stats.describe(earnings), 'median: ', np.median(earnings))
     print(stats.describe(rounds_played), 'median: ', np.median(rounds_played))
-    
+
     # Plotting the results
     plt.hist(earnings, bins = 10, color='blue', edgecolor = 'black')
     plt.xlabel('Earnings')
@@ -47,4 +47,4 @@ initial_balance = 500000
 initial_bet_amount = 10
 max_bet_amount = 500000
 
-simulations(initial_balance, initial_bet_amount)
+simulations(initial_balance, initial_bet_amount, max_bet_amount = max_bet_amount)
