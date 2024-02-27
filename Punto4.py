@@ -30,6 +30,7 @@ def simulations(initial_balance, initial_bet_amount, N=500, max_rounds=None, max
     plt.title('Martingale Simulation')
     plt.show()
 
+
 # A
 initial_balance = 500
 initial_bet_amount = 10
