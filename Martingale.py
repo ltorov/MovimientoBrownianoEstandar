@@ -26,8 +26,13 @@ class MartingaleSimulation:
         self.history.append(self.balance)
 
     def simulate(self):
-        while self.balance > 0 and self.rounds_played < self.max_rounds:
-            self.play_round()
+        while self.balance> 0 and self.rounds_played < self.max_rounds:
+            if self.balance - self.bet_amount >0:
+                self.play_round()
+            else:
+                self.bet_amount = initial_bet_amount
+                self.play_round()
+
 
 # Example Usage:
 initial_balance = 500000
