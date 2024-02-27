@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 class MartingaleSimulation:
-    def __init__(self, initial_balance, initial_bet_amount, max_rounds):
+    def __init__(self, initial_balance, initial_bet_amount, max_rounds = None, max_bet_amount = None):
         self.initial_balance = initial_balance
         self.balance = initial_balance
         self.bet_amount = initial_bet_amount
@@ -12,6 +12,7 @@ class MartingaleSimulation:
         self.rounds_played = 0
         self.history = []
         self.bet_history = []
+        self.max_bet_amount = max_bet_amount
 
     def flip_coin(self):
         return random.choice([0, 1])
@@ -29,10 +30,15 @@ class MartingaleSimulation:
         self.history.append(self.balance)
 
     def simulate(self):
-        while self.balance > 0 and self.rounds_played < self.max_rounds:
+        while self.balance > 0:
+            if self.max_rounds != None and self.rounds_played >= self.max_rounds:
+                break
+            if self.max_bet_amount != None and self.max_bet_amount <= self.bet_amount:
+                break
+
             self.bet_history.append(self.bet_amount)
-            if self.balance - self.bet_amount > 0:
-                self.play_round()
+
+            if self.balance - self.bet_amount >0: self.play_round()
             else:
                 self.bet_amount = self.initial_bet_amount
                 self.play_round()
