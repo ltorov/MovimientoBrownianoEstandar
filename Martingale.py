@@ -10,6 +10,7 @@ class MartingaleSimulation:
         self.max_rounds = max_rounds
         self.rounds_played = 0
         self.history = []
+        self.bet_history = []
 
     def flip_coin(self):
         return random.choice([0, 1])
@@ -28,13 +29,12 @@ class MartingaleSimulation:
 
     def simulate(self):
         while self.balance> 0 and self.rounds_played < self.max_rounds:
+            self.bet_history.append(self.bet_amount)
             if self.balance - self.bet_amount >0:
                 self.play_round()
             else:
                 self.bet_amount = initial_bet_amount
                 self.play_round()
-
-
 
 # Example Usage:
 initial_balance = 500000
@@ -48,5 +48,12 @@ martingale_simulation.simulate()
 plt.plot(range(1, martingale_simulation.rounds_played + 1), martingale_simulation.history)
 plt.xlabel('Rounds')
 plt.ylabel('Balance')
+plt.title('Martingale Simulation')
+plt.show()
+
+# Plotting the results
+plt.plot(range(1, martingale_simulation.rounds_played + 1), martingale_simulation.bet_history)
+plt.xlabel('Rounds')
+plt.ylabel('Bets')
 plt.title('Martingale Simulation')
 plt.show()
