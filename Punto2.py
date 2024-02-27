@@ -1,10 +1,5 @@
-from StandardBrownianMotion import StandardBrownianMotion
 import numpy as np
-import matplotlib.pyplot as plt
-
-def distributional_properties(motion):
-    
-    return 
+from StandardBrownianMotion import StandardBrownianMotion
 
 
 def distributional_properties(motion_a, motion_b):
@@ -12,7 +7,7 @@ def distributional_properties(motion_a, motion_b):
     variance = np.var(motion_a)
     covariance = np.cov(motion_a, motion_b)
     correlation = np.corrcoef(motion_a, motion_b)
-    return mean, variance,covariance, correlation
+    return mean, variance, covariance, correlation
 
 
 def main():
@@ -22,14 +17,15 @@ def main():
 
     brownian_motion = StandardBrownianMotion(num_trayectories, num_steps)
     brownian_motion.generate_brownian_motion()
-    Bt = brownian_motion.brownian_motion
+    Bt = brownian_motion.brownian_motions
     Wt_a = Bt**3 - np.exp(sigma * Bt)
     brownian_motion = StandardBrownianMotion(num_trayectories, num_steps)
     brownian_motion.generate_brownian_motion()
-    Bt = brownian_motion.brownian_motion
+    Bt = brownian_motion.brownian_motions
     Wt_b = Bt**3 - np.exp(sigma * Bt)
 
     mean, variance, covariance, correlation = distributional_properties(Wt_a, Wt_b)
     print(mean, variance, covariance, correlation)
+
 
 main()
