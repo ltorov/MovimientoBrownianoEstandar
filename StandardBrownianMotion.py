@@ -31,6 +31,6 @@ class StandardBrownianMotion:
 # num_steps = 365  # Number of time steps
 
 # # Generate Brownian motion
-# brownian_motion = StandardBrownianMotion(num_trayectories, num_steps, max_time = 1/4)
+# brownian_motion = StandardBrownianMotion(num_trayectories, num_steps, max_time=1/4)
 # brownian_motion.generate_brownian_motion()
 # brownian_motion.plot()
