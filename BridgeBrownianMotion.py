@@ -32,11 +32,11 @@ class BridgeBrownianMotion:
         plt.show()
 
 
-# Parameters
-num_trayectories = 1000
-num_steps = 365  # Number of time steps
+# # Parameters
+# num_trayectories = 1000
+# num_steps = 365  # Number of time steps
 
-# Generate Brownian motion
-bridge_brownian_motion = BridgeBrownianMotion(num_trayectories, num_steps, max_time=1)
-bridge_brownian_motion.generate_bridge_brownian_motion()
-bridge_brownian_motion.plot()
+# # Generate Brownian motion
+# bridge_brownian_motion = BridgeBrownianMotion(num_trayectories, num_steps, max_time=1)
+# bridge_brownian_motion.generate_bridge_brownian_motion()
+# bridge_brownian_motion.plot()
