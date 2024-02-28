@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 from StandardBrownianMotion import StandardBrownianMotion
 
+
 class BridgeBrownianMotion:
     def __init__(self, num_trayectories, num_steps, max_time=1):
         self.num_trayectories = num_trayectories

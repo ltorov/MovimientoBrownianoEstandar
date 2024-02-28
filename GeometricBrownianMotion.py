@@ -13,7 +13,7 @@ class GeometricBrownianMotion:
         self.geometric_brownian_motions = None
         self.alpha = alpha
         self.lamda = lamda
-    
+
     def generate_geometric_brownian_motion(self):
         standard_brownian_motion = StandardBrownianMotion(self.num_trayectories, self.num_steps, max_time=1)
         standard_brownian_motion.generate_brownian_motion()
@@ -38,8 +38,8 @@ class GeometricBrownianMotion:
 # # Parameters
 # num_trayectories = 1000
 # num_steps = 365  # Number of time steps
-        
+
 # # Generate Brownian motion
-# geometric_brownian_motion = GeometricBrownianMotion(num_trayectories, num_steps, max_time=1)
+# geometric_brownian_motion = GeometricBrownianMotion(num_trayectories, num_steps, max_time=1, alpha=0.5, lamda=0.5)
 # geometric_brownian_motion.generate_geometric_brownian_motion()
 # geometric_brownian_motion.plot()
