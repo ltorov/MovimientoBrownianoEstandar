@@ -1,7 +1,8 @@
-from StandardBrownianMotion import StandardBrownianMotion
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import pearsonr, kendalltau
+from StandardBrownianMotion import StandardBrownianMotion
 
 
 def test_independence(bm1, bm2):

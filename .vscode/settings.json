@@ -1,11 +1,19 @@
 {
     "cSpell.words": [
+        "Browniano",
+        "corrcoef",
         "Distribución",
+        "Estándar",
+        "Ganancias",
         "Jugadas",
+        "kendalltau",
         "linestyle",
         "Número",
         "Ocurrencias",
+        "pearsonr",
+        "pvalue",
         "Teórico",
+        "Tiempo",
         "trayectories",
         "xlabel",
         "ylabel"
