@@ -1,58 +1,35 @@
-
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import pearsonr, kendalltau
-from StandardBrownianMotion import StandardBrownianMotion
 
+# Parameters
+T = 1.0  # Total time
+N = 1000  # Number of time steps
+dt = T / N  # Time step
 
-def test_independence(bm1, bm2):
-    pearson_corr = np.zeros(bm1.shape[0])
-    kendall_tau = np.zeros(bm1.shape[0])
+# Simulate Brownian motions
+tiempos = np.linspace(0, T, N)
+covs = []
+corrs = []
 
-    for i in range(bm1.shape[0]):
-        pearson_corr[i] = pearsonr(bm1[i], bm2[i]).pvalue
-        kendall_tau[i] = kendalltau(bm1[i], bm2[i]).pvalue
-        print(kendalltau(bm1[i], bm2[i]))
-        # print(pearson_corr[i])
+for _ in range(500):
+    dBs = np.sqrt(dt) * np.random.randn(N)
+    dBt = np.sqrt(dt) * np.random.randn(N)
+    Bs = np.cumsum(dBs)
+    Bt = np.cumsum(dBt)
+    W3 = np.zeros(N)
 
-    return pearson_corr, kendall_tau
+    for t in range(1, N):
+        s = int(np.random.uniform(0, t))
+        W3[t] = Bs[s] - (s/t)*Bt[t]
 
+    # Compute increments
+    delta_Bt = np.diff(Bt)
+    delta_W3 = np.diff(W3)
 
-def main():
-    num_trayectories = 1000
-    num_steps = 500
+    # Check covariance (approximate independence)
+    covariance = np.cov(delta_Bt, delta_W3)[0, 1]
+    correlation = np.corrcoef(delta_Bt, delta_W3)[0, 1]
+    covs.append(covariance)
+    corrs.append(correlation)
 
-    brownian_motion = StandardBrownianMotion(num_trayectories, num_steps)
-    brownian_motion.generate_brownian_motion()
-    Bt = brownian_motion.brownian_motions
-    t = brownian_motion.t
-
-    brownian_motion1 = StandardBrownianMotion(num_trayectories, num_steps)
-    brownian_motion1.generate_brownian_motion()
-    Bs = brownian_motion1.brownian_motions
-
-    lags = np.linspace(1, 5, 5, dtype="int")
-
-    back_cases = []
-    for lag in lags:
-        print(lag)
-        Ws = np.zeros((num_trayectories, num_steps))
-        # print(Ws)
-        for time in range(lag, num_steps):
-            s = time - lag
-            final_array = Bs[s] - (s / time) * Bt[time]
-            Ws[s] = final_array
-        pearson_corr, kendall_tau = test_independence(Bt, Ws)
-        mean_pearson_corr = np.mean(pearson_corr)
-        mean_kendall_tau = np.mean(kendall_tau)
-        print(Ws)
-        print(Bt)
-        print("Mean Pearson correlation coefficient:", mean_pearson_corr)
-        print("Mean Kendall tau rank correlation coefficient:", mean_kendall_tau)
-
-    # Ws = Bs-(s/t)*Bt
-    # for step in range(1, num_steps):
-    #     np.mean(Bt[step, :]-np.mean(Bt[step, :])*())
-
-
-main()
+print(f"Mean covariance: {np.mean(covs):.10f}")
+print(f"Mean correlation: {np.mean(corrs):.10f}")
