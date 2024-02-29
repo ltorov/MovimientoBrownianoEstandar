@@ -28,6 +28,7 @@ class MartingaleSimulation:
 
         self.rounds_played += 1
         self.history.append(self.balance)
+        self.bet_history.append(self.bet_amount)
 
     def simulate(self):
         while self.balance > 0:
