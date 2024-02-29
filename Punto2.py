@@ -9,12 +9,14 @@ import matplotlib.pyplot as plt
 def distributional_properties(motion_a, motion_b):
     mean = np.mean(motion_a, axis=0)
     variance = np.var(motion_a, axis=0)
-    covariance = np.cov(motion_a, motion_b)
+    covariance = np.cov(motion_a)
     correlation = np.corrcoef(motion_a, motion_b)
     return mean, variance, covariance, correlation
 
 
-def plot_compare_theoric_real(t, real_values, theoric_values, compared_value):
+def plot_compare_theoric_real(
+    t, real_values, theoric_values, compared_value, type_of_motion
+):
     plt.plot(t, real_values, label=compared_value, color="blue", marker="o")
     plt.plot(
         t,
@@ -27,7 +29,7 @@ def plot_compare_theoric_real(t, real_values, theoric_values, compared_value):
     plt.xlabel("Time")
     plt.ylabel("Mean")
     plt.title(
-        f"Comparison of {compared_value} and Theoretical {compared_value} over Time"
+        f"Comparison of {compared_value} and Theoretical {compared_value} over Time for {type_of_motion}"
     )
     plt.legend()
     plt.grid(True)
@@ -51,24 +53,32 @@ def geometric():
     )
     geometric_brownian_motion.generate_geometric_brownian_motion()
     Bt_a = geometric_brownian_motion.geometric_brownian_motions
+    t = geometric_brownian_motion.t
     geometric_brownian_motion = GeometricBrownianMotion(
         num_trayectories, num_steps, max_time=1, alpha=0.5, lamda=0.5
     )
     geometric_brownian_motion.generate_geometric_brownian_motion()
     Bt_b = geometric_brownian_motion.geometric_brownian_motions
-    t = geometric_brownian_motion.t
+    s = geometric_brownian_motion.t
 
     mean, variance, covariance, correlation = distributional_properties(Bt_a, Bt_b)
-    theoric_mean = np.exp(alpha * t + (((lamda**2) * t) / 2))
-    theoric_variance = np.exp(2 * (alpha * t + (((lamda**2) * t) / 2))) * (
+    theoric_mean = np.exp(alpha * t)
+    theoric_variance = np.exp(2 * (alpha * t)) * (
         np.exp((lamda**2) * t) - np.ones(len(t))
     )
+    theoric_covariance = np.exp(2 * alpha * (s + t)) * (
+        np.exp(np.minimum(s, t) * (lamda**2)) - np.ones(len(t))
+    )
 
-    plot_compare_theoric_real(t, mean, theoric_mean, "Mean")
-    plot_compare_theoric_real(t, variance, theoric_variance, "Variance")
+    plot_compare_theoric_real(t, mean, theoric_mean, "Mean", "Geometric")
+    plot_compare_theoric_real(t, variance, theoric_variance, "Variance", "Geometric")
+    # plot_compare_theoric_real(
+    #     t, covariance, theoric_covariance, "Covariance", "Geometric"
+    # )
     print("For the brownian motion modification:")
-    print(f"The covariance is: {covariance}")
-    print(f"The correlation is: {correlation}")
+    print(f"The covariance is: {len(covariance[0])}")
+    print(f"The theoric covariance is: {len(theoric_covariance[0])}")
+    print(f"The correlation is: {len(correlation[0])}")
 
 
 def bridge():
@@ -91,8 +101,8 @@ def bridge():
     theoric_mean = 0 * t
     theoric_variance = (t) * (np.ones(len(t)) - (t))
 
-    plot_compare_theoric_real(t, mean, theoric_mean, "Mean")
-    plot_compare_theoric_real(t, variance, theoric_variance, "Variance")
+    plot_compare_theoric_real(t, mean, theoric_mean, "Mean", "Bridge")
+    plot_compare_theoric_real(t, variance, theoric_variance, "Variance", "Bridge")
     print("For the brownian motion modification:")
     print(f"The covariance is: {covariance}")
     print(f"The correlation is: {correlation}")
@@ -118,8 +128,12 @@ def brown_modification():
     theoric_variance = (
         15 * (t**3) + np.exp(((sigma**2) * t) * 2) + (np.exp((sigma**2) * t)) - 2
     )
-    plot_compare_theoric_real(t, mean, theoric_mean, "Mean")
-    plot_compare_theoric_real(t, variance, theoric_variance, "Variance")
+    plot_compare_theoric_real(
+        t, mean, theoric_mean, "Mean", "Ws = Bs^3 - e^(sigma * s)"
+    )
+    plot_compare_theoric_real(
+        t, variance, theoric_variance, "Variance", "Ws = Bs^3 - e^(sigma * s)"
+    )
     print("For the brownian motion modification:")
     print(f"The covariance is: {covariance}")
     print(f"The correlation is: {correlation}")
