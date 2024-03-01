@@ -4,14 +4,15 @@ from StandardBrownianMotion import StandardBrownianMotion
 from BridgeBrownianMotion import BridgeBrownianMotion
 from GeometricBrownianMotion import GeometricBrownianMotion
 import matplotlib.pyplot as plt
+import random
 
 
-def distributional_properties(motion_a, motion_b):
+def distributional_properties(motion_a):
     mean = np.mean(motion_a, axis=0)
     variance = np.var(motion_a, axis=0)
-    covariance = np.cov(motion_a)
-    correlation = np.corrcoef(motion_a, motion_b)
-    return mean, variance, covariance, correlation
+    # covariance = np.cov(motion_a, motion_b)
+    # correlation = np.corrcoef(motion_a, motion_b)
+    return mean, variance  # , covariance, correlation
 
 
 def plot_compare_theoric_real(
@@ -54,20 +55,19 @@ def geometric():
     geometric_brownian_motion.generate_geometric_brownian_motion()
     Bt_a = geometric_brownian_motion.geometric_brownian_motions
     t = geometric_brownian_motion.t
-    geometric_brownian_motion = GeometricBrownianMotion(
-        num_trayectories, num_steps, max_time=1, alpha=0.5, lamda=0.5
-    )
-    geometric_brownian_motion.generate_geometric_brownian_motion()
-    Bt_b = geometric_brownian_motion.geometric_brownian_motions
-    s = geometric_brownian_motion.t
+    t_rand = random.randrange(1, num_steps + 1)
+    s_rand = random.randrange(1, num_steps + 1)
 
-    mean, variance, covariance, correlation = distributional_properties(Bt_a, Bt_b)
+    covarianza_gr = np.cov(Bt_a[:, t_rand - 1], Bt_a[:, s_rand - 1])
+    covariance = covarianza_gr[0][1]
+
+    mean, variance = distributional_properties(Bt_a)
     theoric_mean = np.exp(alpha * t)
     theoric_variance = np.exp(2 * (alpha * t)) * (
         np.exp((lamda**2) * t) - np.ones(len(t))
     )
-    theoric_covariance = np.exp(2 * alpha * (s + t)) * (
-        np.exp(np.minimum(s, t) * (lamda**2)) - np.ones(len(t))
+    theoric_covariance = np.exp(2 * alpha * (1 / s_rand + 1 / t_rand)) * (
+        np.exp(min(1 / t_rand, 1 / s_rand) * (lamda**2)) - 1
     )
 
     plot_compare_theoric_real(t, mean, theoric_mean, "Mean", "Geometric")
@@ -76,9 +76,9 @@ def geometric():
     #     t, covariance, theoric_covariance, "Covariance", "Geometric"
     # )
     print("For the brownian motion modification:")
-    print(f"The covariance is: {len(covariance[0])}")
-    print(f"The theoric covariance is: {len(theoric_covariance[0])}")
-    print(f"The correlation is: {len(correlation[0])}")
+    print(f"The covariance is: {covariance}")
+    print(f"The theoric covariance is: {theoric_covariance}")
+    # print(f"The correlation is: {len(correlation[0])}")
 
 
 def bridge():
