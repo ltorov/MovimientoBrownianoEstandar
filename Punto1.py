@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from StandardBrownianMotion import StandardBrownianMotion
 
-num_trayectories = 1000
-num_steps = 5000
+num_trayectories = 10000
+num_steps = 500
 
 brownian_motions = StandardBrownianMotion(num_trayectories, num_steps, max_time=1/4)
 brownian_motions.generate_brownian_motion()
@@ -20,11 +20,11 @@ for step in range(1, num_steps):
     # print(np.size(Bt[:,step]))
     experimental[step] = np.mean(np.exp(2*(Bt[:, step]**2)), axis=0)
 
-plt.plot(t, theoretical, label='Teórico', color='#FFD699')
-plt.plot(t, experimental, label='Experimental',  color='#C8D5FA')
+plt.plot(t, theoretical, label='Teórico', color='#FFD699', linewidth=4)
+plt.plot(t, experimental, label='Experimental',  color='#C8D5FA', linewidth=3)
 plt.xlabel('Número de Jugadas')
 plt.ylabel('Ocurrencias')
 plt.legend()
-plt.title('Distribución de Número de Jugadas')
+plt.title('Distribución de Número de Jugadas (500 pasos)')
 plt.grid(True, linestyle='--', alpha=0.5)
 plt.show()
