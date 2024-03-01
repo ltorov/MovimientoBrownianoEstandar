@@ -18,7 +18,7 @@ def simulations(initial_balance, initial_bet_amount, N=500, max_rounds=None, max
     print(stats.describe(rounds_played), 'median: ', np.median(rounds_played))
 
     # Plotting the results
-    plt.hist(earnings, bins=10, color='#FFD699', edgecolor='black', alpha=0.7)
+    plt.hist(earnings, bins=100, color='#FFD699', edgecolor='black', alpha=0.7)
     plt.xlabel('Ganancias')
     plt.ylabel('Ocurrencias')
     plt.title('Distribución de Ganancias')
@@ -26,7 +26,7 @@ def simulations(initial_balance, initial_bet_amount, N=500, max_rounds=None, max
     plt.show()
 
     # Plotting the results
-    plt.hist(rounds_played, bins=10, colo='#C8D5FA', edgecolor='black', alpha=0.7)
+    plt.hist(rounds_played, bins=100, color='#C8D5FA', edgecolor='black', alpha=0.7)
     plt.xlabel('Número de Jugadas')
     plt.ylabel('Ocurrencias')
     plt.title('Distribución de Número de Jugadas')
@@ -38,7 +38,7 @@ def simulations(initial_balance, initial_bet_amount, N=500, max_rounds=None, max
 # initial_balance = 500
 # initial_bet_amount = 10
 # max_rounds = 50
-# simulations(initial_balance, initial_bet_amount, max_rounds = max_rounds)
+# simulations(initial_balance, initial_bet_amount, max_rounds=max_rounds)
 
 
 # # B
@@ -48,7 +48,12 @@ def simulations(initial_balance, initial_bet_amount, N=500, max_rounds=None, max
 
 
 # C
+# initial_balance = 500000
+# initial_bet_amount = 10
+# max_bet_amount = 500000
+# simulations(initial_balance, initial_bet_amount, max_bet_amount=max_bet_amount)
+
+# C interpretacion AGA y mike
 initial_balance = 500000
 initial_bet_amount = 10
-max_bet_amount = 500000
-simulations(initial_balance, initial_bet_amount, max_bet_amount=max_bet_amount)
+simulations(initial_balance, initial_bet_amount)
