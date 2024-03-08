@@ -40,11 +40,11 @@ def plot_compare_theoric_real(
 def main():
     geometric()
     bridge()
-    # brown_modification()
+    brown_modification()
 
 
 def geometric():
-    num_trayectories = 1500
+    num_trayectories = 200
     num_steps = 500  # Number of time steps
     alpha = 0.5
     lamda = 0.5
@@ -55,26 +55,34 @@ def geometric():
     geometric_brownian_motion.generate_geometric_brownian_motion()
     Bt_a = geometric_brownian_motion.geometric_brownian_motions
     t = geometric_brownian_motion.t
-    t_rand = random.randrange(1, num_steps + 1) - 1
-    s_rand = random.randrange(1, t_rand) - 1
     dt = geometric_brownian_motion.dt
-
-    covarianza_gr = np.cov(Bt_a[:, t_rand], Bt_a[:, s_rand])
-    covariance = covarianza_gr[0][1]
-    correlation_gr = np.corrcoef(Bt_a[:, t_rand], Bt_a[:, s_rand])
-    correlation = correlation_gr[0][1]
 
     mean, variance = distributional_properties(Bt_a)
     theoric_mean = np.exp(alpha * t)
     theoric_variance = np.exp(2 * (alpha * t)) * (
         np.exp((lamda**2) * t) - np.ones(len(t))
     )
-    theoric_covariance = np.exp(2 * alpha * (s_rand * dt + t_rand * dt)) * (
-        np.exp(s_rand * dt * (lamda**2)) - 1
-    )
-    theoric_correlation = theoric_covariance / (
-        np.sqrt(theoric_variance[t_rand] * theoric_variance[s_rand])
-    )
+    covar_t = []
+    covar_r = []
+    corr_t = []
+    corr_r = []
+    for i in range(15):
+        t_rand = random.randrange(1, num_steps + 1) - 1
+        s_rand = random.randrange(1, t_rand) - 1
+        covarianza_gr = np.cov(Bt_a[:, t_rand], Bt_a[:, s_rand])
+        covariance = covarianza_gr[0][1]
+        correlation_gr = np.corrcoef(Bt_a[:, t_rand], Bt_a[:, s_rand])
+        correlation = correlation_gr[0][1]
+        theoric_covariance = np.exp(2 * alpha * ((s_rand * dt) + (t_rand * dt))) * (
+            np.exp((t_rand * dt) * (lamda**2)) - 1
+        )
+        theoric_correlation = theoric_covariance / (
+            np.sqrt(theoric_variance[t_rand] * theoric_variance[s_rand])
+        )
+        covar_t.append(theoric_covariance)
+        covar_r.append(covariance)
+        corr_t.append(theoric_correlation)
+        corr_r.append(correlation)
 
     plot_compare_theoric_real(
         t, mean, theoric_mean, "Mean", "Geometric brownian motion"
@@ -84,14 +92,14 @@ def geometric():
     )
 
     print("For the geometric brownian motion:")
-    print(f"The covariance is: {covariance}")
-    print(f"The theoric covariance is: {theoric_covariance}")
-    print(f"The correlation is: {correlation}")
-    print(f"The theoric correlation is: {theoric_correlation} \n")
+    print(f"The covariance is: {np.mean(np.array(covar_r))}")
+    print(f"The theoric covariance is: {np.mean(np.array(covar_t))}")
+    print(f"The correlation is: {np.mean(np.array(corr_r))}")
+    print(f"The theoric correlation is: {np.mean(np.array(corr_t))} \n")
 
 
 def bridge():
-    num_trayectories = 1500
+    num_trayectories = 200
     num_steps = 500
 
     bridge_brownian_motion = BridgeBrownianMotion(
@@ -132,7 +140,7 @@ def bridge():
 
 
 def brown_modification():
-    num_trayectories = 1500
+    num_trayectories = 2500
     num_steps = 500
     sigma = 0.4
 
@@ -146,27 +154,25 @@ def brown_modification():
     dt = brownian_motion.dt
 
     mean, variance = distributional_properties(Bt_a)
-    covarianza_br = np.cov(Bt_a[:, t_rand], Bt_a[:, s_rand])
-    covariance = covarianza_br[0][1]
-    correlation_br = np.cov(Bt_a[:, t_rand], Bt_a[:, s_rand])
-    correlation = correlation_br[0][1]
     theoric_mean = -np.exp(sigma**2 * t / 2)
-    theoric_variance = (t) * (np.ones(len(t)) - (t))
-    theoric_covariance = (s_rand * dt) - (((s_rand * dt) * (t_rand * dt)))
-    theoric_correlation = theoric_covariance / (
-        np.sqrt(theoric_variance[t_rand] * theoric_variance[s_rand])
+    theoric_variance = (
+        (15 * t**3)
+        - (6 * np.exp(((sigma**2) * t) / 2) * t**2 * sigma)
+        - (2 * np.exp(((sigma**2) * t) / 2) * t**3 * sigma**3)
+        + (np.exp(2 * (sigma**2) * t))
+        - np.exp((sigma**2) * t)
     )
 
-    plot_compare_theoric_real(t, mean, theoric_mean, "Mean", "Bridge brownian motion")
+    plot_compare_theoric_real(t, mean, theoric_mean, "Mean", "Brownian modification")
     plot_compare_theoric_real(
-        t, variance, theoric_variance, "Variance", "Bridge brownian motion"
+        t, variance, theoric_variance, "Variance", "Brownian modification"
     )
 
-    print("For the bridge brownian motion:")
-    print(f"The covariance is: {covariance}")
-    print(f"The theoric covariance is: {theoric_covariance}")
-    print(f"The correlation is: {correlation}")
-    print(f"The theoric correlation is: {theoric_correlation} \n")
+    # print("For the bridge brownian motion:")
+    # print(f"The covariance is: {covariance}")
+    # print(f"The theoric covariance is: {theoric_covariance}")
+    # print(f"The correlation is: {correlation}")
+    # print(f"The theoric correlation is: {theoric_correlation} \n")
 
 
 main()
