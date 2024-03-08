@@ -22,17 +22,18 @@ def plot_compare_theoric_real(
     plt.plot(
         t,
         theoric_values,
-        label="Theoretical " + compared_value,
+        label="Teórico " + compared_value,
         color="red",
         marker="x",
     )
 
-    plt.xlabel("Time")
-    plt.ylabel("Mean")
+    plt.xlabel("Tiempo", fontdict={"fontsize": 18})
+    plt.ylabel(compared_value, fontdict={"fontsize": 18})
     plt.title(
-        f"Comparison of {compared_value} and Theoretical {compared_value} over Time for {type_of_motion}"
+        f"{compared_value} y {compared_value} teorico para un {type_of_motion}",
+        fontdict={"fontsize": 22},
     )
-    plt.legend()
+    plt.legend(fontsize=20)
     plt.grid(True)
     plt.show()
 
@@ -44,7 +45,7 @@ def main():
 
 
 def geometric():
-    num_trayectories = 200
+    num_trayectories = 2000
     num_steps = 500  # Number of time steps
     alpha = 0.5
     lamda = 0.5
@@ -85,10 +86,10 @@ def geometric():
         corr_r.append(correlation)
 
     plot_compare_theoric_real(
-        t, mean, theoric_mean, "Mean", "Geometric brownian motion"
+        t, mean, theoric_mean, "Media", "Brownian motion Geometrico"
     )
     plot_compare_theoric_real(
-        t, variance, theoric_variance, "Variance", "Geometric brownian motion"
+        t, variance, theoric_variance, "Varianza", "Brownian motion Geometrico"
     )
 
     print("For the geometric brownian motion:")
@@ -99,7 +100,7 @@ def geometric():
 
 
 def bridge():
-    num_trayectories = 200
+    num_trayectories = 2000
     num_steps = 500
 
     bridge_brownian_motion = BridgeBrownianMotion(
@@ -127,9 +128,9 @@ def bridge():
         np.sqrt(theoric_variance[t_rand] * theoric_variance[s_rand])
     )
 
-    plot_compare_theoric_real(t, mean, theoric_mean, "Mean", "Bridge brownian motion")
+    plot_compare_theoric_real(t, mean, theoric_mean, "Media", "Puente browniano")
     plot_compare_theoric_real(
-        t, variance, theoric_variance, "Variance", "Bridge brownian motion"
+        t, variance, theoric_variance, "Varianza", "Puente browniano"
     )
 
     print("For the bridge brownian motion:")
@@ -163,10 +164,8 @@ def brown_modification():
         - np.exp((sigma**2) * t)
     )
 
-    plot_compare_theoric_real(t, mean, theoric_mean, "Mean", "Brownian modification")
-    plot_compare_theoric_real(
-        t, variance, theoric_variance, "Variance", "Brownian modification"
-    )
+    plot_compare_theoric_real(t, mean, theoric_mean, "Media", "browniano")
+    plot_compare_theoric_real(t, variance, theoric_variance, "Varianza", "browniano")
 
     # print("For the bridge brownian motion:")
     # print(f"The covariance is: {covariance}")
